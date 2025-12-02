@@ -1,5 +1,7 @@
 import { ChevronRight, Download } from 'lucide-react';
 
+import CV from './../assets/CV_Web.pdf';
+
 const Hero = () => {
   return (
     <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
@@ -34,9 +36,9 @@ const Hero = () => {
             <a href="#projects" className="px-6 py-3 bg-slate-100 text-slate-900 font-bold rounded hover:bg-white transition-colors flex items-center gap-2">
               Ver Proyectos <ChevronRight size={18} />
             </a>
-            <button className="px-6 py-3 border border-slate-700 text-slate-300 font-mono rounded hover:border-sky-400 hover:text-sky-400 transition-colors flex items-center gap-2">
+            <a href={CV} target='_blank' download="MarcoCaamalCV.pdf" className="px-6 py-3 border border-slate-700 text-slate-300 font-mono rounded hover:border-sky-400 hover:text-sky-400 transition-colors flex items-center gap-2">
               <Download size={18} /> Descargar CV
-            </button>
+            </a>
           </div>
         </div>
 
