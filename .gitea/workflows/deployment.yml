@@ -1,0 +1,77 @@
+name: Deploy Portfolio
+
+on:
+  push:
+    branches:
+      - main
+
+env:
+  REGISTRY: ${{ secrets.REGISTRY_URL }}
+  IMAGE_TAG: latest
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Prepare Image Name
+        id: image_name
+        # Calculamos el nombre en minúsculas una vez y lo guardamos en GITHUB_ENV (o GITEA_ENV)
+        run: |
+          FULL_NAME="${{ secrets.REGISTRY_URL }}/${{ gitea.repository_owner }}/portfolio"
+          echo "IMAGE_NAME=$(echo $FULL_NAME | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Login to container registry
+        run: |
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} \
+            -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: |
+          docker build \
+            -f Dockerfile \
+            -t $IMAGE_NAME:${{ gitea.sha }} \
+            -t $IMAGE_NAME:latest \
+            .
+
+      - name: Push Docker image
+        run: |
+          docker push $IMAGE_NAME:${{ gitea.sha }}
+          docker push $IMAGE_NAME:latest
+
+  deploy-locally:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare Image Name
+        # Repetimos la definición del nombre porque es un job nuevo (ambiente limpio)
+        run: |
+          FULL_NAME="${{ secrets.REGISTRY_URL }}/${{ gitea.repository_owner }}/portfolio"
+          echo "IMAGE_NAME=$(echo $FULL_NAME | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
+
+      - name: Login to container registry
+        run: |
+          echo "${{ secrets.REGISTRY_PASSWORD }}" | docker login ${{ secrets.REGISTRY_URL }} \
+            -u "${{ secrets.REGISTRY_USERNAME }}" --password-stdin
+
+      - name: Run container locally
+        run: |
+          # Descargar la imagen
+          docker pull $IMAGE_NAME:latest
+          
+          # Detenemos y borramos el contenedor viejo (silenciamos errores con || true)
+          docker stop portfolio || true
+          docker rm portfolio || true
+          
+          # Corremos el nuevo
+          # CORRECCIÓN: Puerto interno 80 (Nginx default) mapeado al 3003 externo
+          docker run -d \
+            --name portfolio \
+            --restart unless-stopped \
+            -p 3003:80 \
+            $IMAGE_NAME:latest
+          
+          # Limpieza de imágenes viejas (Opcional, para ahorrar espacio en disco)
+          docker image prune -f

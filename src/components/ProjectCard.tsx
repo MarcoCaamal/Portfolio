@@ -11,7 +11,7 @@ interface ProjectCardProps {
   reverse?: boolean;
 }
 
-const ProjectCard = ({ title, tags, challenge, solution, icon, mockContent, reverse = false }: ProjectCardProps) => {
+const ProjectCard = ({ title, tags, challenge, solution, mockContent, reverse = false }: ProjectCardProps) => {
   return (
     <div className="group grid lg:grid-cols-2 gap-10 items-start">
       {/* Visual Side */}
