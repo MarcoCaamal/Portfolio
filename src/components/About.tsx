@@ -1,6 +1,4 @@
-import { Cpu, Mail } from 'lucide-react';
-import LinkedinIcon from '../icons/LinkedinIcon';
-import GithubIcon from '../icons/GithubIcon';
+import { Cpu, Terminal } from 'lucide-react';
 
 const About = () => {
   return (
@@ -19,21 +17,17 @@ const About = () => {
           <div className="md:col-span-2 space-y-6">
             <h2 className="text-3xl font-bold">Más allá del código</h2>
             <p className="text-slate-400 leading-relaxed">
-              Comencé mi carrera en el desarrollo web tradicional, pero mi curiosidad por saber "cómo funcionan las cosas por debajo" me llevó hacia la arquitectura de software.
+              Soy un desarrollador Fullstack apasionado por la mejora continua. Con experiencia sólida en la construcción de APIs y soluciones móviles, me enfoco en crear software que no solo funcione, sino que aporte valor real al negocio.
             </p>
-            <p className="text-slate-400 leading-relaxed">
-              Hoy en día, no solo construyo UIs; diseño sistemas completos. Me apasiona el Clean Architecture, la optimización de queries SQL y crear experiencias de usuario que se sientan instantáneas.
-            </p>
-            <div className="flex gap-4 pt-4">
-               <a href="#" className="p-2 bg-slate-800 rounded hover:bg-slate-700 hover:text-sky-400 transition-colors">
-                  <LinkedinIcon size={24} />
-               </a>
-               <a href="#" className="p-2 bg-slate-800 rounded hover:bg-slate-700 hover:text-sky-400 transition-colors">
-                  <GithubIcon size={24} />
-               </a>
-               <a href="#" className="p-2 bg-slate-800 rounded hover:bg-slate-700 hover:text-sky-400 transition-colors">
-                  <Mail size={24} />
-               </a>
+            
+            <div className="bg-slate-900 p-4 rounded-lg border border-slate-800">
+              <h4 className="text-white font-bold mb-2 flex items-center gap-2">
+                  <Terminal size={16} className="text-sky-400"/> Educación
+              </h4>
+              <p className="text-slate-400 text-sm">
+                  <strong className="text-slate-200">TSU en Tecnologías de la Información</strong><br/>
+                  Área Desarrollo de Software Multiplataforma (2023 - Presente)
+              </p>
             </div>
           </div>
 
