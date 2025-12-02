@@ -27,7 +27,7 @@ const Hero = () => {
           </h1>
 
           <p className="text-lg text-slate-400 max-w-xl leading-relaxed">
-            Especialista en construir aplicaciones escalables con <span className="text-indigo-400 font-mono">.NET/NestJS</span> y experiencias modernas en <span className="text-sky-400 font-mono">React</span>. Enfocado en performance, seguridad y código limpio.
+            Especialista en construir aplicaciones escalables con <span className="text-indigo-400 font-mono">.NET</span>, ecosistemas híbridos con <span className="text-sky-400 font-mono">Ionic</span> y experiencias web modernas. Enfocado en performance, seguridad y código limpio.
           </p>
 
           <div className="flex flex-wrap gap-4 pt-4">
@@ -49,36 +49,36 @@ const Hero = () => {
               <div className="w-3 h-3 rounded-full bg-red-400"></div>
               <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
               <div className="w-3 h-3 rounded-full bg-green-400"></div>
-              <span className="ml-4 text-xs text-slate-400 font-mono">OrderController.cs</span>
+              <span className="ml-4 text-xs text-slate-400 font-mono">PaymentService.cs</span>
             </div>
 
             {/* Code Body */}
             <div className="p-6 font-mono text-sm leading-relaxed overflow-x-auto">
               <div className="text-slate-400">
-                <span className="text-indigo-400">namespace</span> <span className="text-slate-100">App.API.Controllers</span>
+                <span className="text-indigo-400">namespace</span> <span className="text-slate-100">Core.Services.Payments</span>
               </div>
               <div className="text-slate-400 mb-4">{`{`}</div>
               
               <div className="pl-4">
-                <span className="text-sky-400">[HttpGet("{`{id}`}"]</span>
+                <span className="text-sky-400">[HttpPost("process")]</span>
               </div>
               <div className="pl-4 mb-2">
-                <span className="text-indigo-400">public async</span> <span className="text-emerald-400">Task&lt;IActionResult&gt;</span> <span className="text-yellow-300">GetOrder</span>(<span className="text-sky-300">int</span> id)
+                <span className="text-indigo-400">public async</span> <span className="text-emerald-400">Task&lt;ITransaction&gt;</span> <span className="text-yellow-300">ExecutePayment</span>(<span className="text-sky-300">PaymentDto</span> dto)
               </div>
               <div className="pl-4 text-slate-400 mb-2">{`{`}</div>
               
               <div className="pl-8 text-slate-500 border-l-2 border-slate-700 italic mb-2">
-                 // Optimized query with Dapper/EF Core
+                 // Integration with BBVA Multipagos / EVO
               </div>
               
               <div className="pl-8 mb-1">
-                <span className="text-indigo-400">var</span> order = <span className="text-indigo-400">await</span> _service.<span className="text-yellow-300">GetByIdAsync</span>(id);
+                <span className="text-indigo-400">var</span> gateway = _factory.<span className="text-yellow-300">GetGateway</span>(dto.Type);
               </div>
               <div className="pl-8 mb-1">
-                <span className="text-indigo-400">if</span> (order == <span className="text-indigo-400">null</span>) <span className="text-indigo-400">return</span> <span className="text-yellow-300">NotFound</span>();
+                <span className="text-indigo-400">if</span> (!gateway.<span className="text-yellow-300">IsActive</span>()) <span className="text-indigo-400">throw new</span> <span className="text-emerald-400">ServiceUnavailableException</span>();
               </div>
               <div className="pl-8">
-                <span className="text-indigo-400">return</span> <span className="text-yellow-300">Ok</span>(order);
+                <span className="text-indigo-400">return await</span> gateway.<span className="text-yellow-300">ChargeAsync</span>(dto);
               </div>
 
               <div className="pl-4 text-slate-400">{`}`}</div>
@@ -88,10 +88,10 @@ const Hero = () => {
             {/* Status Bar */}
             <div className="flex justify-between items-center px-4 py-1 bg-slate-800 text-[10px] font-mono text-slate-400 border-t border-slate-700">
               <div className="flex gap-4">
-                <span>main*</span>
-                <span>Ln 14, Col 32</span>
+                <span>dev*</span>
+                <span>Ln 24, Col 12</span>
               </div>
-              <div>Running on localhost:5000</div>
+              <div>Connected to: SQL Server</div>
             </div>
           </div>
         </div>
