@@ -16,12 +16,13 @@ const Navbar = () => {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 border-b ${scrolled ? 'bg-slate-900/90 backdrop-blur-md border-slate-800 py-4' : 'bg-transparent border-transparent py-6'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div className="font-mono text-xl font-bold tracking-tight text-sky-400">
-          &lt;DevName /&gt;
+          &lt;MarcoCaamal /&gt;
         </div>
         
         <div className="hidden md:flex gap-8 text-sm font-medium text-slate-300">
-          <a href="#stack" className="hover:text-sky-400 transition-colors">Stack</a>
+          <a href="#experience" className="hover:text-sky-400 transition-colors">Experiencia</a>
           <a href="#projects" className="hover:text-sky-400 transition-colors">Proyectos</a>
+          <a href="#stack" className="hover:text-sky-400 transition-colors">Stack</a>
           <a href="#about" className="hover:text-sky-400 transition-colors">Sobre Mí</a>
         </div>
 
